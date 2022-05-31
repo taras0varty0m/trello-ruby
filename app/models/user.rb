@@ -8,4 +8,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
   has_many :columns
+  has_many :cards
+  has_many :comments
 end

@@ -1,0 +1,32 @@
+# frozen_string_literal: true
+
+module Api
+  module V1
+    class CommentsController < AuthenticationController
+      before_action :authenticate_api_v1_user!, except: %i[index show]
+
+      def index
+        comments = ::Comment.all
+        render json: { comments: comments }, status: :ok
+      end
+
+      def show
+        comment = ::Comment.find params[:id]
+        render json: { comment: comment }, status: :ok
+      end
+
+      def create
+        ActiveRecord::Base.transaction do
+          comment = Api::V1::Comment::CreateCommentService.new(
+            params[:text],
+            params[:card_id],
+            current_api_v1_user.id
+          ).call
+          render json: { comment: comment }
+        end
+      rescue StandardError => e
+        render json: { error: e }
+      end
+    end
+  end
+end

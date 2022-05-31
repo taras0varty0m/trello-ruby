@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class ColumnTest < ActiveSupport::TestCase
+class CardTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
