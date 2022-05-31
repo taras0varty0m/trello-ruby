@@ -4,5 +4,5 @@ class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :card
 
-  validates :text, presence: true
+  validates :text, :user_id, :card_id, presence: true
 end
