@@ -6,26 +6,35 @@ module Api
       before_action :authenticate_api_v1_user!, except: %i[index show]
 
       def index
-        columns = ::Column.all
-        render json: { columns: columns }, status: :ok
+        render json: ::Column.all
       end
 
       def show
         column = ::Column.find params[:id]
-        render json: { column: column }, status: :ok
+        render json: column
       end
 
       def create
-        ActiveRecord::Base.transaction do
-          column = Api::V1::Column::CreateColumnService.new(
-            params[:title],
-            current_api_v1_user.id
-          ).call
-          render json: { column: column }
-        end
+        column = Api::V1::Column::CreateColumnService.new(
+          params[:title],
+          current_api_v1_user.id
+        ).call
+        render json: column
       rescue StandardError => e
-        render json: { error: e }
+        render json: { error: e }, status: 409
       end
+
+      def update
+        Api::V1::Column::UpdateColumnService.new(
+          params[:id],
+          params[:title],
+          current_api_v1_user.id
+        ).call
+        render json: { message: 'Column successfully updated'}
+      rescue StandardError => e
+        render json: { error: e }, status: 403
+      end
+
     end
   end
 end

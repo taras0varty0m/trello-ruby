@@ -6,13 +6,12 @@ module Api
       before_action :authenticate_api_v1_user!, except: %i[index show]
 
       def index
-        comments = ::Comment.all
-        render json: { comments: comments }, status: :ok
+        render json: ::Comment.all
       end
 
       def show
         comment = ::Comment.find params[:id]
-        render json: { comment: comment }, status: :ok
+        render json: comment
       end
 
       def create
@@ -26,6 +25,17 @@ module Api
         end
       rescue StandardError => e
         render json: { error: e }
+      end
+
+      def update
+        Api::V1::Comment::UpdateCommentService.new(
+          params[:id],
+          params[:text],
+          current_api_v1_user.id
+        ).call
+        render json: { message: 'Comment successfully updated'}
+      rescue StandardError => e
+        render json: { error: e }, status: 403
       end
     end
   end

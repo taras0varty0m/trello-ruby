@@ -6,13 +6,12 @@ module Api
       before_action :authenticate_api_v1_user!, except: %i[index show]
 
       def index
-        cards = ::Card.all
-        render json: { cards: cards }, status: :ok
+        render json: ::Card.all
       end
 
       def show
         card = ::Card.find params[:id]
-        render json: { card: card }, status: :ok
+        render json: card
       end
 
       def create
@@ -27,6 +26,18 @@ module Api
         end
       rescue StandardError => e
         render json: { error: e }
+      end
+
+      def update
+        Api::V1::Card::UpdateCardService.new(
+          params[:id],
+          params[:title],
+          params[:description],
+          current_api_v1_user.id
+        ).call
+        render json: { message: 'Card successfully updated'}
+      rescue StandardError => e
+        render json: { error: e }, status: 403
       end
     end
   end
