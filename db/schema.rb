@@ -18,30 +18,33 @@ ActiveRecord::Schema.define(version: 20_220_531_050_801) do
 
   create_table 'cards', force: :cascade do |t|
     t.bigint 'user_id', null: false
-    t.string 'title'
-    t.string 'description'
+    t.string 'title', null: false
+    t.string 'description', null: false
     t.bigint 'column_id', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
     t.index ['column_id'], name: 'index_cards_on_column_id'
+    t.index ['title'], name: 'index_cards_on_title', unique: true
     t.index ['user_id'], name: 'index_cards_on_user_id'
   end
 
-  create_table 'column', force: :cascade do |t|
-    t.string 'title'
+  create_table 'columns', force: :cascade do |t|
+    t.string 'title', null: false
     t.bigint 'user_id', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
+    t.index ['title'], name: 'index_columns_on_title', unique: true
     t.index ['user_id'], name: 'index_columns_on_user_id'
   end
 
   create_table 'comments', force: :cascade do |t|
     t.bigint 'user_id', null: false
     t.bigint 'card_id', null: false
-    t.string 'text'
+    t.string 'text', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
     t.index ['card_id'], name: 'index_comments_on_card_id'
+    t.index ['text'], name: 'index_comments_on_text', unique: true
     t.index ['user_id'], name: 'index_comments_on_user_id'
   end
 
@@ -70,9 +73,9 @@ ActiveRecord::Schema.define(version: 20_220_531_050_801) do
     t.index %w[uid provider], name: 'index_users_on_uid_and_provider', unique: true
   end
 
-  add_foreign_key 'cards', 'column'
+  add_foreign_key 'cards', 'columns'
   add_foreign_key 'cards', 'users'
-  add_foreign_key 'column', 'users'
+  add_foreign_key 'columns', 'users'
   add_foreign_key 'comments', 'cards'
   add_foreign_key 'comments', 'users'
 end

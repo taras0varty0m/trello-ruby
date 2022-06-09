@@ -11,9 +11,6 @@ module Api
         end
 
         def call
-          prev_comment = ::Comment.find_by text: @text
-          raise StandardError, 'Comment already exists' if prev_comment.present?
-
           ::Comment.create(text: @text, card_id: @card_id, user_id: @user_id)
         end
       end
