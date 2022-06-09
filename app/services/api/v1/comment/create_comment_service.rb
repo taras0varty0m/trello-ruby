@@ -4,8 +4,6 @@ module Api
   module V1
     module Comment
       class CreateCommentService < ApplicationService
-        attr_reader :text, :card_id, :user_id
-
         def initialize(text, card_id, user_id)
           @text = text
           @card_id = card_id

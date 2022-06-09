@@ -4,8 +4,6 @@ module Api
   module V1
     module Card
       class CreateCardService < ApplicationService
-        attr_reader :title, :description, :column_id, :user_id
-
         def initialize(title, description, column_id, user_id)
           @title = title
           @description = description

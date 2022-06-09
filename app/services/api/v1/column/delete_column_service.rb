@@ -4,8 +4,6 @@ module Api
   module V1
     module Column
       class DeleteColumnService < ApplicationService
-        attr_reader :id, :user_id
-
         def initialize(id, user_id)
           @id = id
           @user_id = user_id

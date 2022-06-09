@@ -4,8 +4,6 @@ module Api
   module V1
     module Card
       class UpdateCardService < ApplicationService
-        attr_reader :id, :title, :user_id
-
         def initialize(id, title, description, user_id)
           @id = id
           @title = title

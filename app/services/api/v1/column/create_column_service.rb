@@ -4,8 +4,6 @@ module Api
   module V1
     module Column
       class CreateColumnService < ApplicationService
-        attr_reader :title, :user_id
-
         def initialize(title, user_id)
           @title = title
           @user_id = user_id

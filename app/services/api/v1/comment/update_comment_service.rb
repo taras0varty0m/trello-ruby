@@ -4,8 +4,6 @@ module Api
   module V1
     module Comment
       class UpdateCommentService < ApplicationService
-        attr_reader :id, :text, :user_id
-
         def initialize(id, text, user_id)
           @id = id
           @text = text
