@@ -32,8 +32,7 @@ module Api
         Api::V1::Card::UpdateCardService.new(
           params[:id],
           params[:title],
-          params[:description],
-          current_user.id
+          params[:description]
         ).call
         render json: { message: 'Card successfully updated'}
       rescue StandardError => e
@@ -41,7 +40,7 @@ module Api
       end
 
       def destroy
-        Api::V1::Card::DeleteCardService.new(params[:id], current_user.id).call
+        Api::V1::Card::DeleteCardService.new(params[:id]).call
         render json: { message: 'Card successfully deleted'}
       rescue StandardError => e
         render json: { error: e }, status: 403

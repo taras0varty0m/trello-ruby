@@ -30,8 +30,7 @@ module Api
       def update
         Api::V1::Comment::UpdateCommentService.new(
           params[:id],
-          params[:text],
-          current_user.id
+          params[:text]
         ).call
         render json: { message: 'Comment successfully updated'}
       rescue StandardError => e
@@ -39,7 +38,7 @@ module Api
       end
 
       def destroy
-        Api::V1::Comment::DeleteCommentService.new(params[:id], current_user.id).call
+        Api::V1::Comment::DeleteCommentService.new(params[:id]).call
         render json: { message: 'Comment successfully deleted'}
       rescue StandardError => e
         render json: { error: e }, status: 403

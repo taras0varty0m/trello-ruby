@@ -27,8 +27,7 @@ module Api
       def update
         Api::V1::Column::UpdateColumnService.new(
           params[:id],
-          params[:title],
-          current_user.id
+          params[:title]
         ).call
         render json: { message: 'Column successfully updated'}
       rescue StandardError => e
@@ -36,7 +35,7 @@ module Api
       end
 
       def destroy
-        Api::V1::Column::DeleteColumnService.new(params[:id], current_user.id).call
+        Api::V1::Column::DeleteColumnService.new(params[:id]).call
         render json: { message: 'Column successfully deleted'}
       rescue StandardError => e
         render json: { error: e }, status: 403
