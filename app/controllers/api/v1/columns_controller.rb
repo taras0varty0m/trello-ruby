@@ -3,7 +3,7 @@
 module Api
   module V1
     class ColumnsController < AuthenticationController
-      before_action :authenticate_api_v1_user!, except: %i[index show]
+      before_action :authenticate_user!, except: %i[index show]
 
       def index
         render json: ::Column.all
@@ -17,7 +17,7 @@ module Api
       def create
         column = Api::V1::Column::CreateColumnService.new(
           params[:title],
-          current_api_v1_user.id
+          current_user.id
         ).call
         render json: column
       rescue StandardError => e
@@ -28,7 +28,7 @@ module Api
         Api::V1::Column::UpdateColumnService.new(
           params[:id],
           params[:title],
-          current_api_v1_user.id
+          current_user.id
         ).call
         render json: { message: 'Column successfully updated'}
       rescue StandardError => e
@@ -36,7 +36,7 @@ module Api
       end
 
       def destroy
-        Api::V1::Column::DeleteColumnService.new(params[:id], current_api_v1_user.id).call
+        Api::V1::Column::DeleteColumnService.new(params[:id], current_user.id).call
         render json: { message: 'Column successfully deleted'}
       rescue StandardError => e
         render json: { error: e }, status: 403

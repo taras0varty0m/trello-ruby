@@ -3,7 +3,7 @@
 module Api
   module V1
     class CardsController < AuthenticationController
-      before_action :authenticate_api_v1_user!, except: %i[index show]
+      before_action :authenticate_user!, except: %i[index show]
 
       def index
         render json: ::Card.all
@@ -20,7 +20,7 @@ module Api
             params[:title],
             params[:description],
             params[:column_id],
-            current_api_v1_user.id
+            current_user.id
           ).call
           render json: { card: card }
         end
@@ -33,7 +33,7 @@ module Api
           params[:id],
           params[:title],
           params[:description],
-          current_api_v1_user.id
+          current_user.id
         ).call
         render json: { message: 'Card successfully updated'}
       rescue StandardError => e
@@ -41,7 +41,7 @@ module Api
       end
 
       def destroy
-        Api::V1::Card::DeleteCardService.new(params[:id], current_api_v1_user.id).call
+        Api::V1::Card::DeleteCardService.new(params[:id], current_user.id).call
         render json: { message: 'Card successfully deleted'}
       rescue StandardError => e
         render json: { error: e }, status: 403

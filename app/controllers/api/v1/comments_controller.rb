@@ -3,7 +3,7 @@
 module Api
   module V1
     class CommentsController < AuthenticationController
-      before_action :authenticate_api_v1_user!, except: %i[index show]
+      before_action :authenticate_user!, except: %i[index show]
 
       def index
         render json: ::Comment.all
@@ -19,7 +19,7 @@ module Api
           comment = Api::V1::Comment::CreateCommentService.new(
             params[:text],
             params[:card_id],
-            current_api_v1_user.id
+            current_user.id
           ).call
           render json: { comment: comment }
         end
@@ -31,7 +31,7 @@ module Api
         Api::V1::Comment::UpdateCommentService.new(
           params[:id],
           params[:text],
-          current_api_v1_user.id
+          current_user.id
         ).call
         render json: { message: 'Comment successfully updated'}
       rescue StandardError => e
@@ -39,7 +39,7 @@ module Api
       end
 
       def destroy
-        Api::V1::Comment::DeleteCommentService.new(params[:id], current_api_v1_user.id).call
+        Api::V1::Comment::DeleteCommentService.new(params[:id], current_user.id).call
         render json: { message: 'Comment successfully deleted'}
       rescue StandardError => e
         render json: { error: e }, status: 403
