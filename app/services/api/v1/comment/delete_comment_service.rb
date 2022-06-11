@@ -9,6 +9,8 @@ module Api
         end
 
         def call
+          @comment = ::Comment.find @id
+
           @comment.destroy
         end
       end

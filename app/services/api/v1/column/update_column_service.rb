@@ -10,9 +10,6 @@ module Api
         end
 
         def call
-          prev_column = ::Column.find_by title: @title
-          raise StandardError, "Column with title '#{@title}' already exists" if prev_column.present?
-
           @column = ::Column.find @id
 
           @column.update(title: @title)

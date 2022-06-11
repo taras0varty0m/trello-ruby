@@ -4,7 +4,8 @@ class Card < ApplicationRecord
   belongs_to :user
   belongs_to :column
 
-  validates :title, :column_id, :description, :user_id, presence: true
+  validates :column_id, :description, :user_id, presence: true
+  validates :title, uniqueness: true, presence: true
 
   has_many :comments
 end

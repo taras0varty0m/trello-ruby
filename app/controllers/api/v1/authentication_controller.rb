@@ -8,8 +8,8 @@ module Api
       protect_from_forgery with: :exception
       skip_before_action :verify_authenticity_token
 
-      alias :authenticate_user! :authenticate_api_v1_user!
-      alias :current_user :current_api_v1_user
+      alias authenticate_user! authenticate_api_v1_user!
+      alias current_user current_api_v1_user
     end
   end
 end

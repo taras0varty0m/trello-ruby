@@ -10,9 +10,6 @@ module Api
         end
 
         def call
-          prev_comment = ::Comment.find_by text: @text
-          raise StandardError, "Comment with text '#{@text}' already exists" if prev_comment.present?
-
           @comment = ::Comment.find @id
 
           @comment.update(text: @text)

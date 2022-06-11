@@ -15,17 +15,13 @@ module Api
       end
 
       def create
-        ActiveRecord::Base.transaction do
-          card = Api::V1::Card::CreateCardService.new(
-            params[:title],
-            params[:description],
-            params[:column_id],
-            current_user.id
-          ).call
-          render json: { card: card }
-        end
-      rescue StandardError => e
-        render json: { error: e }
+        card = Api::V1::Card::CreateCardService.new(
+          params[:title],
+          params[:description],
+          params[:column_id],
+          current_user.id
+        ).call
+        render json: card
       end
 
       def update
@@ -34,16 +30,12 @@ module Api
           params[:title],
           params[:description]
         ).call
-        render json: { message: 'Card successfully updated'}
-      rescue StandardError => e
-        render json: { error: e }, status: 403
+        render json: { message: 'Card successfully updated' }
       end
 
       def destroy
         Api::V1::Card::DeleteCardService.new(params[:id]).call
-        render json: { message: 'Card successfully deleted'}
-      rescue StandardError => e
-        render json: { error: e }, status: 403
+        render json: { message: 'Card successfully deleted' }
       end
     end
   end

@@ -15,16 +15,12 @@ module Api
       end
 
       def create
-        ActiveRecord::Base.transaction do
-          comment = Api::V1::Comment::CreateCommentService.new(
-            params[:text],
-            params[:card_id],
-            current_user.id
-          ).call
-          render json: { comment: comment }
-        end
-      rescue StandardError => e
-        render json: { error: e }
+        comment = Api::V1::Comment::CreateCommentService.new(
+          params[:text],
+          params[:card_id],
+          current_user.id
+        ).call
+        render json: comment
       end
 
       def update
@@ -32,16 +28,12 @@ module Api
           params[:id],
           params[:text]
         ).call
-        render json: { message: 'Comment successfully updated'}
-      rescue StandardError => e
-        render json: { error: e }, status: 403
+        render json: { message: 'Comment successfully updated' }
       end
 
       def destroy
         Api::V1::Comment::DeleteCommentService.new(params[:id]).call
-        render json: { message: 'Comment successfully deleted'}
-      rescue StandardError => e
-        render json: { error: e }, status: 403
+        render json: { message: 'Comment successfully deleted' }
       end
     end
   end

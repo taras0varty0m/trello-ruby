@@ -3,7 +3,8 @@
 class Column < ApplicationRecord
   belongs_to :user
 
-  validates :title, :user_id, presence: true
+  validates :user_id, presence: true
+  validates :title, uniqueness: true, presence: true
 
   has_many :cards
 end
