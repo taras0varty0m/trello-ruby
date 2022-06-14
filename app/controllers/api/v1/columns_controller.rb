@@ -26,7 +26,7 @@ module Api
 
       def destroy
         Api::V1::Column::DeleteColumnService.new(params[:id]).call
-        render json: { message: 'Column successfully deleted' }
+        render json: { message: 'Column successfully deleted' }, status: :no_content
       end
     end
   end

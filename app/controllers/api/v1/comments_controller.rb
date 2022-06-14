@@ -30,7 +30,7 @@ module Api
 
       def destroy
         Api::V1::Comment::DeleteCommentService.new(params[:id]).call
-        render json: { message: 'Comment successfully deleted' }
+        render json: { message: 'Comment successfully deleted' }, status: :no_content
       end
     end
   end

@@ -35,7 +35,7 @@ module Api
 
       def destroy
         Api::V1::Card::DeleteCardService.new(params[:id]).call
-        render json: { message: 'Card successfully deleted' }
+        render json: { message: 'Card successfully deleted' }, status: :no_content
       end
     end
   end
