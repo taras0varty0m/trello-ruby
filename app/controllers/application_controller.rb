@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
   end
 
   def render_record_not_found(error)
-    render json: { error: error.message }, status: 404
+    render json: { error: error.message }, status: :not_found
   end
 
   def render_not_unique_error(error)
@@ -21,6 +21,6 @@ class ApplicationController < ActionController::API
   end
 
   def render_standard_error(error)
-    render json: { error: error.message }
+    render json: { error: error.message }, status: :internal_server_error
   end
 end

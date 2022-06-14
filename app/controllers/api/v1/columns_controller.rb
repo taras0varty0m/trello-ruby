@@ -6,22 +6,22 @@ module Api
       before_action :authenticate_user!, except: %i[index show]
 
       def index
-        render json: ::Column.all
+        render json: ::Column.all, status: :ok
       end
 
       def show
         column = ::Column.find params[:id]
-        render json: column
+        render json: column, status: :ok
       end
 
       def create
         column = Api::V1::Column::CreateColumnService.new(params[:title], current_user.id).call
-        render json: column
+        render json: column, status: :created
       end
 
       def update
         Api::V1::Column::UpdateColumnService.new(params[:id], params[:title]).call
-        render json: { message: 'Column successfully updated' }
+        render json: { message: 'Column successfully updated' }, status: :ok
       end
 
       def destroy

@@ -6,12 +6,12 @@ module Api
       before_action :authenticate_user!, except: %i[index show]
 
       def index
-        render json: ::Card.all
+        render json: ::Card.all, status: :ok
       end
 
       def show
         card = ::Card.find params[:id]
-        render json: card
+        render json: card, status: :ok
       end
 
       def create
@@ -21,7 +21,7 @@ module Api
           params[:column_id],
           current_user.id
         ).call
-        render json: card
+        render json: card, status: :created
       end
 
       def update
@@ -30,7 +30,7 @@ module Api
           params[:title],
           params[:description]
         ).call
-        render json: { message: 'Card successfully updated' }
+        render json: { message: 'Card successfully updated' }, status: :ok
       end
 
       def destroy
