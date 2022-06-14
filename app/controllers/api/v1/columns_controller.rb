@@ -15,18 +15,12 @@ module Api
       end
 
       def create
-        column = Api::V1::Column::CreateColumnService.new(
-          params[:title],
-          current_user.id
-        ).call
+        column = Api::V1::Column::CreateColumnService.new(params[:title], current_user.id).call
         render json: column
       end
 
       def update
-        Api::V1::Column::UpdateColumnService.new(
-          params[:id],
-          params[:title]
-        ).call
+        Api::V1::Column::UpdateColumnService.new(params[:id], params[:title]).call
         render json: { message: 'Column successfully updated' }
       end
 

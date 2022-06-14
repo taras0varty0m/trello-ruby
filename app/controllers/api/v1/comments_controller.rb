@@ -24,10 +24,7 @@ module Api
       end
 
       def update
-        Api::V1::Comment::UpdateCommentService.new(
-          params[:id],
-          params[:text]
-        ).call
+        Api::V1::Comment::UpdateCommentService.new(params[:id], params[:text]).call
         render json: { message: 'Comment successfully updated' }
       end
 
