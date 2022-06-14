@@ -13,7 +13,10 @@ module Api
         def call
           @card = ::Card.find @id
 
-          @card.update(title: @title, description: @description)
+          @card.title = @title if @title.present?
+          @card.description = @description if @description.present?
+
+          @card.save!
         end
       end
     end

@@ -11,7 +11,7 @@ module Api
         end
 
         def call
-          ::Comment.create(text: @text, card_id: @card_id, user_id: @user_id)
+          ::Comment.create!(text: @text, card_id: @card_id, user_id: @user_id)
         end
       end
     end

@@ -12,7 +12,9 @@ module Api
         def call
           @comment = ::Comment.find @id
 
-          @comment.update(text: @text)
+          @comment.text = @text if @text.present?
+
+          @comment.save!
         end
       end
     end

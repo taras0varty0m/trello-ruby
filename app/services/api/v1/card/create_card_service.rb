@@ -12,7 +12,7 @@ module Api
         end
 
         def call
-          ::Card.create(title: @title, description: @description, column_id: @column_id,
+          ::Card.create!(title: @title, description: @description, column_id: @column_id,
                         user_id: @user_id)
         end
       end

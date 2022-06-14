@@ -12,7 +12,9 @@ module Api
         def call
           @column = ::Column.find @id
 
-          @column.update(title: @title)
+          @column.title = @title if @title.present?
+
+          @column.save!
         end
       end
     end

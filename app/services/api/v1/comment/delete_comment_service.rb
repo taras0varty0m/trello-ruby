@@ -11,7 +11,7 @@ module Api
         def call
           @comment = ::Comment.find @id
 
-          @comment.destroy
+          @comment.destroy!
         end
       end
     end

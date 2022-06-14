@@ -11,7 +11,7 @@ module Api
         def call
           @column = ::Column.find @id
 
-          @column.destroy
+          @column.destroy!
         end
       end
     end

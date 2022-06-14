@@ -10,7 +10,7 @@ module Api
         end
 
         def call
-          ::Column.create(title: @title, user_id: @user_id)
+          ::Column.create!(title: @title, user_id: @user_id)
         end
       end
     end

@@ -11,7 +11,7 @@ module Api
         def call
           @card = ::Card.find @id
 
-          @card.destroy
+          @card.destroy!
         end
       end
     end
